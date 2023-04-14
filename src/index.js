@@ -21,9 +21,9 @@ app.get('/:id', async (req, res) => {
       const id = Number(req.params.id);
       const data = await getTalkerById(id);
       if (!data) res.status(404).json({ message: 'Pessoa palestrante não encontrada' });
-      res.status(HTTP_OK).json(data);
+      res.status(200).json(data);
   } catch (err) {
-      res.status(HTTP_INTERNAL_SV_ERROR).send({ message: err.message });
+      res.status(404).send({ message: err.message });
   }
 });
 
