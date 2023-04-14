@@ -12,6 +12,7 @@ const readTalkers = async () => {
         return error;
     }
 };
+
 const writeTalker = async (newTalkersList) => {
     await fs.writeFile(talkersArrPath, JSON.stringify(newTalkersList));
 };
