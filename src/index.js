@@ -17,7 +17,7 @@ app.get('/talker', async (_request, response) => {
   return response.status(HTTP_OK_STATUS).json(talkersData);
 });
 
-app.get('/:id', async (req, res) => {
+app.get('/talker/:id', async (req, res) => {
   try {
       const id = Number(req.params.id);
       const data = await getTalkerById(id);
