@@ -25,6 +25,14 @@ app.get('/talker/:id', async (req, res) => {
   }
   res.status(200).json(listTalker);
 });
+app.post('/login', async (_req, res) => {
+  try {
+      const token = readTalkers();
+      res.status(200).json({ token });
+  } catch (err) {
+      res.status(400).send({ message: err.message });
+  }
+});
 
 app.listen(PORT, () => {
   console.log('Online');
