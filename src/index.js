@@ -1,13 +1,14 @@
 const express = require('express');
 const fs = require('fs').promises;
 const path = require('path');
-const { readTalkers } = require('./utils/utils');
-
-const app = express();
-app.use(express.json());
+const rotaTalker = require('./routes/routerTalk');
+const rotaLogin = require('./routes/routerLogin');
 
 const HTTP_OK_STATUS = 200;
-const PORT = process.env.PORT || '3001';
+const PORT = '3000';
+
+const app = express(); 
+app.use(express.json());
 
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/talker', async (_request, response) => {
@@ -17,23 +18,10 @@ app.get('/talker', async (_request, response) => {
   return response.status(HTTP_OK_STATUS).json(talkersData);
 });
 
-app.get('/talker/:id', async (req, res) => {
-  const talkerID = await readTalkers();
-  const listTalker = talkerID.find(({ id }) => id === Number(req.params.id));
-  if (!listTalker) {
-    return res.status(404).json({ message: 'Pessoa palestrante não encontrada' });
-  }
-  res.status(200).json(listTalker);
-});
-app.post('/login', async (_req, res) => {
-  try {
-      const token = readTalkers();
-      res.status(200).json({ token });
-  } catch (err) {
-      res.status(400).send({ message: err.message });
-  }
-});
+app.use('/search', rotaTalker);
 
+ app.use('/login', rotaLogin);
+ app.use('/talker', rotaTalker);
 app.listen(PORT, () => {
   console.log('Online');
 });
