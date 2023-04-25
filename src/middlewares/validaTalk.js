@@ -28,15 +28,15 @@ const checkAge = (req, res, next) => {
     }
     if (typeof age !== 'number') {
      return res.status(HTTP_BAD_REQUEST).json({ 
-        message: 'O campo "age" deve ser do tipo "number"' });
+        message: 'O campo "age" deve ser um número inteiro igual ou maior que 18' });
     }
     if (!Number.isInteger(age)) {
         return res.status(HTTP_BAD_REQUEST).json({
-            message: 'O campo "age" deve ser um "number" do tipo inteiro' });
+            message: 'O campo "age" deve ser um número inteiro igual ou maior que 18' });
     }
     if (age < 18) {
         return res.status(HTTP_BAD_REQUEST).json({ 
-            message: 'A pessoa palestrante deve ser maior de idade' });
+            message: 'O campo "age" deve ser um número inteiro igual ou maior que 18' });
     }
     next();
 };
@@ -66,7 +66,7 @@ const checkTalkRate = (req, res, next) => {
     const { rate } = req.body.talk;
     if (rate < 1 || rate > 5) {
         return res.status(HTTP_BAD_REQUEST).json({ 
-            message: 'O campo "rate" deve ser um inteiro de 1 à 5' });
+            message: 'O campo "rate" deve ser um número inteiro entre 1 e 5' });
     }
 
     if (!rate) {
@@ -75,7 +75,7 @@ const checkTalkRate = (req, res, next) => {
 
     if (!Number.isInteger(rate)) {
         return res.status(HTTP_BAD_REQUEST).json({ 
-            message: 'O campo "rate" deve ser um inteiro de 1 à 5' });
+            message: 'O campo "rate" deve ser um número inteiro entre 1 e 5' });
     }
 
     next();
