@@ -54,13 +54,16 @@ rotaTalker.put('/:id', validateToken, checkName, checkAge,
       const talkers = await readTalkers();
       const id = Number(req.params.id);
       const index = talkers.findIndex((talker) => talker.id === id);
-      if (index === -1) res.status(404).json({ message: 'Pessoa palestrante não encontrada' });
+      if (index === -1) {
+        return res.status(404)
+      .json({ message: 'Pessoa palestrante não encontrada' });
+    }
       const updatedTalker = { id, ...req.body };
       talkers.splice(index, 1, updatedTalker);
       await writeTalker(talkers);
       return res.status(HTTP_OK).json(updatedTalker);
     } catch (err) {
-      res.status(HTTP_INTERNAL_SV_ERROR).send({ message: err.message });
+      return res.status(404).send({ message: err.message });
     }
   });
 
